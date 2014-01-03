@@ -1,0 +1,12 @@
+#!/bin/sh
+# - use ". ./import-environment" to source minidlna spk env
+[ ${SYNOPKG_PKGDEST} ] || SYNOPKG_PKGDEST=`ls -l /var/packages/minidlna/target | cut -d\> -f2 | cut -d\  -f2`
+
+if [ "${MINIDLNA_ENVIRONMENT}"  -eq 1 ]; then
+        echo "environment already set"
+else
+	export LD_LIBRARY_PATH=${SYNOPKG_PKGDEST}/lib:${LD_LIBRARY_PATH}
+	export PATH=${SYNOPKG_PKGDEST}/bin:$PATH
+	export MINIDLNA_ENVIRONMENT=1
+fi
+

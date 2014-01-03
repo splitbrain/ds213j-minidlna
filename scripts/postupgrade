@@ -1,0 +1,6 @@
+#!/bin/sh
+rm ${SYNOPKG_PKGDEST}/etc/minidlna.conf
+mv ${SYNOPKG_PKGDEST}/../minidlna_tmp_upgrade/*  ${SYNOPKG_PKGDEST}/etc
+rm -r ${SYNOPKG_PKGDEST}/../minidlna_tmp_upgrade
+exit 0
+

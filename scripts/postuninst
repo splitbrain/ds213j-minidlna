@@ -1,0 +1,8 @@
+#!/bin/sh
+[ ${SYNOPKG_PKGDEST} ] || SYNOPKG_PKGDEST=`ls -l /var/packages/minidlna/target | cut -d\> -f2 | cut -d\  -f2`
+rm -f /usr/syno/synoman/webman/3rdparty/minidlna
+MINIDLNA_HOME=`grep '^minidlna\:' /etc/passwd | cut -d: -f6`
+rmdir ${MINIDLNA_HOME}
+[ -e ${SYNOPKG_PKGDEST}/../minidlna_tmp_upgrade ] || synouser --del minidlna
+exit 0
+

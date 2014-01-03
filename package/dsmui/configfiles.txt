@@ -1,0 +1,10 @@
+#####################################
+# This Package uses "Config File Editor"
+# version 1.2 by Remco Schellekens
+#
+# Configfile for 'Config File Editor' 
+#  
+# format:
+# <full path to file>,<name to display>
+#####################################
+

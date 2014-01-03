@@ -1,0 +1,6 @@
+#!/bin/sh
+[ ${SYNOPKG_PKGDEST} ] || SYNOPKG_PKGDEST=`ls -l /var/packages/minidlna/target | cut -d\> -f2 | cut -d\  -f2`
+pkgindexer_del ${SYNOPKG_PKGDEST}/dsmui/index.conf 1>/dev/null
+pkgindexer_del ${SYNOPKG_PKGDEST}/dsmui/helptoc.conf 1>/dev/null
+exit 0
+

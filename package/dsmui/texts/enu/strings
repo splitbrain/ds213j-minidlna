@@ -1,0 +1,7 @@
+[app]
+app_name	=	"minidlna"
+
+[help]
+title_changelog	=	"Changelog"
+title_legal		=	"Copying"
+

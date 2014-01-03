@@ -1,0 +1,32 @@
+#!/bin/sh
+[ ${SYNOPKG_PKGDEST} ] || SYNOPKG_PKGDEST=`ls -l /var/packages/minidlna/target | cut -d\> -f2 | cut -d\  -f2`
+
+# link DSM webman
+[ -L /usr/syno/synoman/webman/3rdparty/minidlna ] || ln -s "${SYNOPKG_PKGDEST}/dsmui" /usr/syno/synoman/webman/3rdparty/minidlna
+
+# create MiniDLNA system user
+synouser --add minidlna `openssl rand 27 -base64 2>/dev/null` "MiniDLNA daemon user" 1 "" ""
+MINIDLNA_HOME=`grep '^minidlna\:' /etc/passwd | cut -d: -f6`
+if [ ! ${MINIDLNA_HOME} ]; then
+    echo "Could not create minidlna system user, please check your accounts configuration." >${SYNOPKG_TEMP_LOGFILE}
+    exit 1
+fi
+[ -e ${MINIDLNA_HOME} ] || mkdir -p ${MINIDLNA_HOME}
+chown -R minidlna ${MINIDLNA_HOME} ${SYNOPKG_PKGDEST}/var
+
+# add help contents on install
+pkgindexer_add ${SYNOPKG_PKGDEST}/dsmui/index.conf 1>/dev/null
+pkgindexer_add ${SYNOPKG_PKGDEST}/dsmui/helptoc.conf 1>/dev/null
+
+# always generate default config for CFE original
+HOSTNAME=`hostname`
+echo "friendly_name=MiniDLNA [${HOSTNAME}]" >>${SYNOPKG_PKGDEST}/etc/minidlna.conf
+echo "db_dir=${SYNOPKG_PKGDEST}/var/cache" >>${SYNOPKG_PKGDEST}/etc/minidlna.conf
+echo "log_dir=${SYNOPKG_PKGDEST}/var/log" >>${SYNOPKG_PKGDEST}/etc/minidlna.conf
+echo "#EOF." >>${SYNOPKG_PKGDEST}/etc/minidlna.conf
+cp ${SYNOPKG_PKGDEST}/etc/minidlna.conf ${SYNOPKG_PKGDEST}/dsmui/original/minidlna.conf.original
+
+echo "${SYNOPKG_PKGDEST}/etc/minidlna.conf,minidlna.conf" >>${SYNOPKG_PKGDEST}/dsmui/original/Config\ File\ Editor.original
+echo "${SYNOPKG_PKGDEST}/etc/minidlna.conf,minidlna.conf" >>${SYNOPKG_PKGDEST}/dsmui/configfiles.txt
+exit 0 
+
