@@ -1,5 +1,5 @@
 package="minidlna"
-version="1.0.22-3"
+version="1.0.25-1"
 displayname="MiniDLNA"
 maintainer="Justin Maggard"
 dsmappname="SYNO.SDS._ThirdParty.App.minidlna"
